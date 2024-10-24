@@ -1,8 +1,9 @@
+import { smallCardsContainer } from './render-small-cards.js';
+
 const alphabetSortButton = document.querySelector('#alphabet-sort');
 const reverseSortButton = document.querySelector('#alphabet-sort-reverse');
 
 const smallCards = Array.from(document.querySelectorAll('.small-card'));
-const smallCardsContainer = document.querySelector('.weather-content__small-cards');
 
 const sortCards = (type) => {
   let smallCardsSorted;
