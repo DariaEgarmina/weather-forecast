@@ -14,7 +14,6 @@ const searchCity = (input) => {
 };
 
 searchInputElement.addEventListener('input', (evt) => {
+  evt.preventDefault();
   searchCity(evt.target);
 });
-
-
