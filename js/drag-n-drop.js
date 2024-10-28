@@ -9,12 +9,6 @@ const makeCardsDraggable = (cardElements) => {
 };
 
 const getNextElement = (cursorPosition, currentElement) => {
-
-  if (currentElement.classList.contains('big-card__header') ||
-    currentElement.classList.contains('big-card__content')) {
-    currentElement = currentElement.closest('.big-card');
-  }
-
   const currentElementCoord = currentElement.getBoundingClientRect();
   const currentElementCenter = currentElementCoord.y + currentElementCoord.height / 2;
 
@@ -28,12 +22,18 @@ const getNextElement = (cursorPosition, currentElement) => {
 const moveElement = (evt) => {
   const activeElement = weatherContentContainer.querySelector('.selected');
 
-  const currentElement = evt.target;
+  let currentElement;
+
+  if (evt.target.classList.contains('big-card__header') ||
+    evt.target.classList.contains('big-card__content')) {
+    currentElement = evt.target.closest('.big-card');
+  } else {
+    currentElement = evt.target;
+  }
 
   const isMoveable = activeElement !== currentElement &&
     currentElement.classList.contains('small-card') ||
-    currentElement.classList.contains('big-card__header') ||
-    currentElement.classList.contains('big-card__content');
+    currentElement.classList.contains('big-card');
 
   if (!isMoveable) {
     return;
