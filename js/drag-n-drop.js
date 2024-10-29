@@ -2,6 +2,8 @@ const weatherContentContainer = document.querySelector('.weather-content__result
 const smallCards = document.querySelectorAll('.small-card');
 const bigCards = document.querySelectorAll('.big-card');
 
+const bigCardTemplate = document.querySelector('#big-card').content.querySelector('.big-card');
+
 const makeCardsDraggable = (cardElements) => {
   for (const card of cardElements) {
     card.draggable = true;
@@ -31,11 +33,16 @@ const moveElement = (evt) => {
     currentElement = evt.target;
   }
 
-  const isMoveable = activeElement !== currentElement &&
+  const isMovable = activeElement !== currentElement &&
     currentElement.classList.contains('small-card') ||
     currentElement.classList.contains('big-card');
 
-  if (!isMoveable) {
+  if (!isMovable) {
+    return;
+  }
+
+  if (activeElement.classList.contains('small-card') &&
+    currentElement.closest('.weather-content__small-cards')) {
     return;
   }
 
@@ -56,33 +63,42 @@ const moveElement = (evt) => {
   }
 };
 
+const changeCardType = (evt) => {
+  const activeElement = evt.target;
+  const bigCardElement = bigCardTemplate.cloneNode(true);
+
+  if (activeElement.parentElement.classList.contains('weather-content__big-cards')) {
+    const cityName = activeElement.querySelector('.small-card__city').textContent;
+    const temperature = activeElement.querySelector('.small-card__temperature').textContent;
+    const weatherConditions = activeElement.querySelector('.big-card__weather-conditions').innerHTML;
+    const wind = activeElement.querySelector('.big-card__wind-info').textContent;
+
+    bigCardElement.querySelector('.big-card__city').textContent = cityName;
+    bigCardElement.querySelector('.big-card__temperature').textContent = `+${temperature}`;
+    bigCardElement.querySelector('.big-card__weather-conditions').innerHTML = weatherConditions;
+    bigCardElement.querySelector('.big-card__wind-info').textContent = wind;
+
+
+    activeElement.classList.replace('small-card', 'big-card');
+    activeElement.innerHTML = bigCardElement.innerHTML;
+  }
+
+  if (activeElement.parentElement.classList.contains('weather-content__small-cards')) {
+    activeElement.classList.replace('big-card', 'small-card');
+    activeElement.querySelector('.big-card__content-wrapper').style.display = 'none';
+  }
+};
+
 makeCardsDraggable(smallCards);
 makeCardsDraggable(bigCards);
 
 weatherContentContainer.addEventListener('dragstart', (evt) => {
   evt.target.classList.add('selected');
-
-  const parent = evt.target.parentElement;
-  if(parent.classList.contains('weather-content__small-cards') &&
-  evt.target.classList.contains('small-card')) {
-    evt.target.classList.add('undraggable');
-  }
 });
 
 weatherContentContainer.addEventListener('dragend', (evt) => {
   evt.target.classList.remove('selected');
-
-  const parent = evt.target.parentElement;
-  if(parent.classList.contains('weather-content__big-cards') &&
-  evt.target.classList.contains('small-card')) {
-    evt.target.classList.remove('undraggable');
-  }
-
-  //Это была моя идея, но она не работает
-  if(parent.classList.contains('weather-content__small-cards') &&
-  evt.target.classList.contains('undraggable')) {
-    evt.preventDefault();
-  }
+  changeCardType(evt);
 });
 
 weatherContentContainer.addEventListener('dragover', (evt) => {
