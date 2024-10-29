@@ -61,10 +61,28 @@ makeCardsDraggable(bigCards);
 
 weatherContentContainer.addEventListener('dragstart', (evt) => {
   evt.target.classList.add('selected');
+
+  const parent = evt.target.parentElement;
+  if(parent.classList.contains('weather-content__small-cards') &&
+  evt.target.classList.contains('small-card')) {
+    evt.target.classList.add('undraggable');
+  }
 });
 
 weatherContentContainer.addEventListener('dragend', (evt) => {
   evt.target.classList.remove('selected');
+
+  const parent = evt.target.parentElement;
+  if(parent.classList.contains('weather-content__big-cards') &&
+  evt.target.classList.contains('small-card')) {
+    evt.target.classList.remove('undraggable');
+  }
+
+  //Это была моя идея, но она не работает
+  if(parent.classList.contains('weather-content__small-cards') &&
+  evt.target.classList.contains('undraggable')) {
+    evt.preventDefault();
+  }
 });
 
 weatherContentContainer.addEventListener('dragover', (evt) => {
