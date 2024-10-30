@@ -28,4 +28,4 @@ const renderSmallCards = (citiesArray) => {
 
 renderSmallCards(cities.cities);
 
-export { smallCardsContainer };
+export { smallCardsContainer, smallCardTemplate };

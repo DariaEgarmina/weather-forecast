@@ -1,3 +1,5 @@
+import { smallCardTemplate } from './render-small-cards.js';
+
 const weatherContentContainer = document.querySelector('.weather-content__result');
 const smallCards = document.querySelectorAll('.small-card');
 const bigCards = document.querySelectorAll('.big-card');
@@ -66,8 +68,10 @@ const moveElement = (evt) => {
 const changeCardType = (evt) => {
   const activeElement = evt.target;
   const bigCardElement = bigCardTemplate.cloneNode(true);
+  const smallCardElement = smallCardTemplate.cloneNode(true);
 
-  if (activeElement.parentElement.classList.contains('weather-content__big-cards')) {
+  if (activeElement.classList.contains('small-card')
+    && activeElement.parentElement.classList.contains('weather-content__big-cards')) {
     const cityName = activeElement.querySelector('.small-card__city').textContent;
     const temperature = activeElement.querySelector('.small-card__temperature').textContent;
     const weatherConditions = activeElement.querySelector('.big-card__weather-conditions').innerHTML;
@@ -83,9 +87,16 @@ const changeCardType = (evt) => {
     activeElement.innerHTML = bigCardElement.innerHTML;
   }
 
-  if (activeElement.parentElement.classList.contains('weather-content__small-cards')) {
+  if (activeElement.classList.contains('big-card')
+    && activeElement.parentElement.classList.contains('weather-content__small-cards')) {
+    const cityName = activeElement.querySelector('.big-card__city').textContent;
+    const temperature = activeElement.querySelector('.big-card__temperature').textContent;
+
+    smallCardElement.querySelector('.small-card__city').textContent = cityName;
+    smallCardElement.querySelector('.small-card__temperature').textContent = temperature;
+
     activeElement.classList.replace('big-card', 'small-card');
-    activeElement.querySelector('.big-card__content-wrapper').style.display = 'none';
+    activeElement.innerHTML = smallCardElement.innerHTML;
   }
 };
 
