@@ -1,6 +1,12 @@
 import { smallCardTemplate } from './render-small-cards.js';
 import { sortCards } from './sort.js';
 
+const PLUS = '+';
+const MINUS = '-';
+const ZERO = '0';
+const DEGREE = '°';
+const regex = /^[1-9]+$/;
+
 const weatherContentContainer = document.querySelector('.weather-content__result');
 const smallCards = document.querySelectorAll('.small-card');
 const bigCards = document.querySelectorAll('.big-card');
@@ -66,6 +72,27 @@ const moveElement = (evt) => {
   }
 };
 
+const createTemperature = (activeElement, className) => {
+  const temperature = activeElement.querySelector(className).textContent;
+  const isDigitsOnly = regex.test(temperature);
+
+  if (isDigitsOnly) {
+    return `${PLUS}${temperature}${DEGREE}`;
+  }
+
+  if (temperature.startsWith(MINUS)) {
+    return `${temperature}${DEGREE}`;
+  }
+
+  if (temperature.startsWith(ZERO)) {
+    return temperature;
+  }
+
+  if (temperature.startsWith(PLUS)) {
+    return temperature.replace(PLUS, '').replace(DEGREE, '');
+  }
+};
+
 const changeCardType = (evt) => {
   const activeElement = evt.target;
   const bigCardElement = bigCardTemplate.cloneNode(true);
@@ -74,12 +101,12 @@ const changeCardType = (evt) => {
   if (activeElement.classList.contains('small-card')
     && activeElement.parentElement.classList.contains('weather-content__big-cards')) {
     const cityName = activeElement.querySelector('.small-card__city').textContent;
-    const temperature = activeElement.querySelector('.small-card__temperature').textContent;
+    const temperature = createTemperature(activeElement, '.small-card__temperature');
     const weatherConditions = activeElement.querySelector('.big-card__weather-conditions').innerHTML;
     const wind = activeElement.querySelector('.big-card__wind-info').textContent;
 
     bigCardElement.querySelector('.big-card__city').textContent = cityName;
-    bigCardElement.querySelector('.big-card__temperature').textContent = `+${temperature}`;
+    bigCardElement.querySelector('.big-card__temperature').textContent = temperature;
     bigCardElement.querySelector('.big-card__weather-conditions').innerHTML = weatherConditions;
     bigCardElement.querySelector('.big-card__wind-info').textContent = wind;
 
@@ -91,7 +118,8 @@ const changeCardType = (evt) => {
   if (activeElement.classList.contains('big-card')
     && activeElement.parentElement.classList.contains('weather-content__small-cards')) {
     const cityName = activeElement.querySelector('.big-card__city').textContent;
-    const temperature = activeElement.querySelector('.big-card__temperature').textContent;
+    // const temperature = activeElement.querySelector('.big-card__temperature').textContent;
+    const temperature = createTemperature(activeElement, '.big-card__temperature');
 
     smallCardElement.querySelector('.small-card__city').textContent = cityName;
     smallCardElement.querySelector('.small-card__temperature').textContent = temperature;
@@ -119,8 +147,6 @@ weatherContentContainer.addEventListener('dragend', (evt) => {
     const newSmallCards = document.querySelectorAll('.small-card');
     makeCardsDraggable(newSmallCards);
   }
-
-
 });
 
 weatherContentContainer.addEventListener('dragover', (evt) => {
