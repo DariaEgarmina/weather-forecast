@@ -5,13 +5,13 @@ const reverseSortButton = document.querySelector('#alphabet-sort-reverse');
 
 const smallCards = Array.from(document.querySelectorAll('.small-card'));
 
-const sortCards = (type) => {
+const sortCards = (type, smallCardsArray) => {
   let smallCardsSorted;
 
   if (type === 'alphabet') {
-    smallCardsSorted = smallCards.sort((a, b) => a.innerText > b.innerText ? 1 : -1);
+    smallCardsSorted = smallCardsArray.sort((a, b) => a.innerText > b.innerText ? 1 : -1);
   } else if (type === 'reverse') {
-    smallCardsSorted = smallCards.sort((a, b) => a.innerText > b.innerText ? -1 : 1);
+    smallCardsSorted = smallCardsArray.sort((a, b) => a.innerText > b.innerText ? -1 : 1);
   }
 
   smallCardsContainer.innerHTML = smallCardsSorted.map((item) => `<div class="small-card">${item.innerHTML}</div>`).join('');
@@ -19,10 +19,12 @@ const sortCards = (type) => {
 
 alphabetSortButton.addEventListener('click', (evt) => {
   evt.preventDefault();
-  sortCards('alphabet');
+  sortCards('alphabet', smallCards);
 });
 
 reverseSortButton.addEventListener('click', (evt) => {
   evt.preventDefault();
-  sortCards('reverse');
+  sortCards('reverse', smallCards);
 });
+
+export { sortCards };

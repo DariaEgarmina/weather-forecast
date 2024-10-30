@@ -1,4 +1,5 @@
 import { smallCardTemplate } from './render-small-cards.js';
+import { sortCards } from './sort.js';
 
 const weatherContentContainer = document.querySelector('.weather-content__result');
 const smallCards = document.querySelectorAll('.small-card');
@@ -110,9 +111,21 @@ weatherContentContainer.addEventListener('dragstart', (evt) => {
 weatherContentContainer.addEventListener('dragend', (evt) => {
   evt.target.classList.remove('selected');
   changeCardType(evt);
+
+  if (evt.target.parentElement.classList.contains('weather-content__small-cards')) {
+    const smallCardsArray = Array.from(evt.target.parentElement.querySelectorAll('.small-card'));
+    sortCards('alphabet', smallCardsArray);
+
+    const newSmallCards = document.querySelectorAll('.small-card');
+    makeCardsDraggable(newSmallCards);
+  }
+
+
 });
 
 weatherContentContainer.addEventListener('dragover', (evt) => {
   evt.preventDefault();
   moveElement(evt);
 });
+
+export { makeCardsDraggable };
