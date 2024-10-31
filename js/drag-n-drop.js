@@ -1,5 +1,5 @@
 import { changeCardType } from './change-card-type.js';
-import { sortCards } from './sort.js';
+import { sortCards, alphabetSortButton, reverseSortButton } from './sort.js';
 
 const weatherContentContainer = document.querySelector('.weather-content__result');
 const smallCards = document.querySelectorAll('.small-card');
@@ -75,18 +75,14 @@ weatherContentContainer.addEventListener('dragend', (evt) => {
   evt.target.classList.remove('selected');
   changeCardType(evt);
 
-  // const radio = document.querySelector('input[type="radio"]:checked');
-  // console.log(radio);
-
-  // if (radio.value === 'alphabet-sort') {
-  //   console.log('hi');
-  // } else if (radio.value === 'alphabet-sort-reverse') {
-  //   console.log('bye!');
-  // }
-
-  if (evt.target.parentElement.classList.contains('weather-content__small-cards')) {
+  if (alphabetSortButton.hasAttribute('checked') && evt.target.parentElement.classList.contains('weather-content__small-cards')) {
     const smallCardsArray = Array.from(evt.target.parentElement.querySelectorAll('.small-card'));
     sortCards('alphabet', smallCardsArray);
+  }
+
+  if (reverseSortButton.hasAttribute('checked') && evt.target.parentElement.classList.contains('weather-content__small-cards')) {
+    const smallCardsArray = Array.from(evt.target.parentElement.querySelectorAll('.small-card'));
+    sortCards('reverse', smallCardsArray);
   }
 });
 
