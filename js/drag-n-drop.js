@@ -1,17 +1,9 @@
-import { smallCardTemplate } from './render-small-cards.js';
+import { changeCardType } from './change-card-type.js';
 import { sortCards } from './sort.js';
-
-const PLUS = '+';
-const MINUS = '-';
-const ZERO = '0';
-const DEGREE = '°';
-const regex = /^[1-9]+$/;
 
 const weatherContentContainer = document.querySelector('.weather-content__result');
 const smallCards = document.querySelectorAll('.small-card');
 const bigCards = document.querySelectorAll('.big-card');
-
-const bigCardTemplate = document.querySelector('#big-card').content.querySelector('.big-card');
 
 const makeCardsDraggable = (cardElements) => {
   for (const card of cardElements) {
@@ -72,63 +64,6 @@ const moveElement = (evt) => {
   }
 };
 
-const createTemperature = (activeElement, className) => {
-  const temperature = activeElement.querySelector(className).textContent;
-  const isDigitsOnly = regex.test(temperature);
-
-  if (isDigitsOnly) {
-    return `${PLUS}${temperature}${DEGREE}`;
-  }
-
-  if (temperature.startsWith(MINUS)) {
-    return `${temperature}${DEGREE}`;
-  }
-
-  if (temperature.startsWith(ZERO)) {
-    return temperature;
-  }
-
-  if (temperature.startsWith(PLUS)) {
-    return temperature.replace(PLUS, '').replace(DEGREE, '');
-  }
-};
-
-const changeCardType = (evt) => {
-  const activeElement = evt.target;
-  const bigCardElement = bigCardTemplate.cloneNode(true);
-  const smallCardElement = smallCardTemplate.cloneNode(true);
-
-  if (activeElement.classList.contains('small-card')
-    && activeElement.parentElement.classList.contains('weather-content__big-cards')) {
-    const cityName = activeElement.querySelector('.small-card__city').textContent;
-    const temperature = createTemperature(activeElement, '.small-card__temperature');
-    const weatherConditions = activeElement.querySelector('.big-card__weather-conditions').innerHTML;
-    const wind = activeElement.querySelector('.big-card__wind-info').textContent;
-
-    bigCardElement.querySelector('.big-card__city').textContent = cityName;
-    bigCardElement.querySelector('.big-card__temperature').textContent = temperature;
-    bigCardElement.querySelector('.big-card__weather-conditions').innerHTML = weatherConditions;
-    bigCardElement.querySelector('.big-card__wind-info').textContent = wind;
-
-
-    activeElement.classList.replace('small-card', 'big-card');
-    activeElement.innerHTML = bigCardElement.innerHTML;
-  }
-
-  if (activeElement.classList.contains('big-card')
-    && activeElement.parentElement.classList.contains('weather-content__small-cards')) {
-    const cityName = activeElement.querySelector('.big-card__city').textContent;
-    // const temperature = activeElement.querySelector('.big-card__temperature').textContent;
-    const temperature = createTemperature(activeElement, '.big-card__temperature');
-
-    smallCardElement.querySelector('.small-card__city').textContent = cityName;
-    smallCardElement.querySelector('.small-card__temperature').textContent = temperature;
-
-    activeElement.classList.replace('big-card', 'small-card');
-    activeElement.innerHTML = smallCardElement.innerHTML;
-  }
-};
-
 makeCardsDraggable(smallCards);
 makeCardsDraggable(bigCards);
 
@@ -153,5 +88,3 @@ weatherContentContainer.addEventListener('dragover', (evt) => {
   evt.preventDefault();
   moveElement(evt);
 });
-
-export { makeCardsDraggable };
