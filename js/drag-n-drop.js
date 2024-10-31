@@ -75,6 +75,15 @@ weatherContentContainer.addEventListener('dragend', (evt) => {
   evt.target.classList.remove('selected');
   changeCardType(evt);
 
+  // const radio = document.querySelector('input[type="radio"]:checked');
+  // console.log(radio);
+
+  // if (radio.value === 'alphabet-sort') {
+  //   console.log('hi');
+  // } else if (radio.value === 'alphabet-sort-reverse') {
+  //   console.log('bye!');
+  // }
+
   if (evt.target.parentElement.classList.contains('weather-content__small-cards')) {
     const smallCardsArray = Array.from(evt.target.parentElement.querySelectorAll('.small-card'));
     sortCards('alphabet', smallCardsArray);

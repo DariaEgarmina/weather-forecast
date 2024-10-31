@@ -23,11 +23,17 @@ const sortCards = (type, smallCardsArray) => {
 alphabetSortButton.addEventListener('click', (evt) => {
   evt.preventDefault();
   sortCards('alphabet', smallCards);
+
+  alphabetSortButton.setAttribute('checked', '');
+  reverseSortButton.removeAttribute('checked');
 });
 
 reverseSortButton.addEventListener('click', (evt) => {
   evt.preventDefault();
   sortCards('reverse', smallCards);
+
+  alphabetSortButton.removeAttribute('checked');
+  reverseSortButton.setAttribute('checked', '');
 });
 
 export { sortCards };
