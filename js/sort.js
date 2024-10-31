@@ -1,9 +1,10 @@
 import { smallCardsContainer } from './render-small-cards.js';
+import { makeCardsDraggable } from './drag-n-drop.js';
 
 const alphabetSortButton = document.querySelector('#alphabet-sort');
 const reverseSortButton = document.querySelector('#alphabet-sort-reverse');
 
-const smallCards = Array.from(document.querySelectorAll('.small-card'));
+const smallCards = Array.from(smallCardsContainer.querySelectorAll('.small-card'));
 
 const sortCards = (type, smallCardsArray) => {
   let smallCardsSorted;
@@ -15,6 +16,8 @@ const sortCards = (type, smallCardsArray) => {
   }
 
   smallCardsContainer.innerHTML = smallCardsSorted.map((item) => `<div class="small-card">${item.innerHTML}</div>`).join('');
+  const newSmallCards = smallCardsContainer.querySelectorAll('.small-card');
+  makeCardsDraggable(newSmallCards);
 };
 
 alphabetSortButton.addEventListener('click', (evt) => {

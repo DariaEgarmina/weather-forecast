@@ -78,9 +78,6 @@ weatherContentContainer.addEventListener('dragend', (evt) => {
   if (evt.target.parentElement.classList.contains('weather-content__small-cards')) {
     const smallCardsArray = Array.from(evt.target.parentElement.querySelectorAll('.small-card'));
     sortCards('alphabet', smallCardsArray);
-
-    const newSmallCards = document.querySelectorAll('.small-card');
-    makeCardsDraggable(newSmallCards);
   }
 });
 
@@ -88,3 +85,5 @@ weatherContentContainer.addEventListener('dragover', (evt) => {
   evt.preventDefault();
   moveElement(evt);
 });
+
+export { makeCardsDraggable };
