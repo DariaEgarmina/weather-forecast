@@ -4,8 +4,6 @@ import { makeCardsDraggable } from './drag-n-drop.js';
 const alphabetSortButton = document.querySelector('#alphabet-sort');
 const reverseSortButton = document.querySelector('#alphabet-sort-reverse');
 
-// const smallCards = Array.from(smallCardsContainer.querySelectorAll('.small-card'));
-
 const sortCards = (type) => {
   const smallCards = Array.from(smallCardsContainer.querySelectorAll('.small-card'));
 
@@ -20,6 +18,19 @@ const sortCards = (type) => {
   smallCardsContainer.innerHTML = smallCardsSorted.map((item) => `<div class="small-card">${item.innerHTML}</div>`).join('');
   const newSmallCards = smallCardsContainer.querySelectorAll('.small-card');
   makeCardsDraggable(newSmallCards);
+};
+
+const sortCardsWhenDrop = (evt) => {
+  const smallCardsArray = Array.from(evt.target.parentElement.querySelectorAll('.small-card'));
+  const isSmallCard = evt.target.parentElement.classList.contains('weather-content__small-cards');
+
+  if (alphabetSortButton.hasAttribute('checked') && isSmallCard) {
+    sortCards('alphabet', smallCardsArray);
+  }
+
+  if (reverseSortButton.hasAttribute('checked') && isSmallCard) {
+    sortCards('reverse', smallCardsArray);
+  }
 };
 
 alphabetSortButton.addEventListener('click', (evt) => {
@@ -38,4 +49,4 @@ reverseSortButton.addEventListener('click', (evt) => {
   reverseSortButton.setAttribute('checked', '');
 });
 
-export { sortCards, alphabetSortButton, reverseSortButton };
+export { sortCardsWhenDrop };

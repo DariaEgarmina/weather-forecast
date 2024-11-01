@@ -1,5 +1,5 @@
 import { changeCardType } from './change-card-type.js';
-import { sortCards, alphabetSortButton, reverseSortButton } from './sort.js';
+import { sortCardsWhenDrop } from './sort.js';
 
 const weatherContentContainer = document.querySelector('.weather-content__result');
 const smallCards = document.querySelectorAll('.small-card');
@@ -74,16 +74,7 @@ weatherContentContainer.addEventListener('dragstart', (evt) => {
 weatherContentContainer.addEventListener('dragend', (evt) => {
   evt.target.classList.remove('selected');
   changeCardType(evt);
-
-  if (alphabetSortButton.hasAttribute('checked') && evt.target.parentElement.classList.contains('weather-content__small-cards')) {
-    const smallCardsArray = Array.from(evt.target.parentElement.querySelectorAll('.small-card'));
-    sortCards('alphabet', smallCardsArray);
-  }
-
-  if (reverseSortButton.hasAttribute('checked') && evt.target.parentElement.classList.contains('weather-content__small-cards')) {
-    const smallCardsArray = Array.from(evt.target.parentElement.querySelectorAll('.small-card'));
-    sortCards('reverse', smallCardsArray);
-  }
+  sortCardsWhenDrop(evt);
 });
 
 weatherContentContainer.addEventListener('dragover', (evt) => {
