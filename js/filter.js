@@ -1,15 +1,29 @@
 const bigCardsContainer = document.querySelector('.weather-content__big-cards');
 const checkboxContainer = document.querySelector('.sort-form__group--checkbox');
 
-const filterBigCards = (evt) => {
-  const bigCards = Array.from(document.querySelectorAll('.big-card'));
-  const value = evt.target.value;
+const filterBigCards = () => {
+  const bigCards = Array.from(bigCardsContainer.querySelectorAll('.big-card'));
+  bigCards.forEach((item) => item.style.display = 'flex');
 
-  const bigCardsFiltered = bigCards.filter((item) => item.querySelector(`.icon--${value }`));
+  const activeCheckboxes = Array.from(document.querySelectorAll('input[name = "weather-conditions"]:checked'));
 
-  bigCardsContainer.innerHTML = bigCardsFiltered.map((item) => `<div class="big-card">${item.innerHTML}</div>`).join('');
+  if (activeCheckboxes.length > 0) {
+    activeCheckboxes.forEach((element) => {
+      const value = element.value;
+
+      bigCards.forEach((item) => {
+        if (item.querySelector(`.icon--${value}`)) {
+          item.style.display = 'flex';
+        } else if (!item.querySelector(`.icon--${value}`)) {
+          item.style.display = 'none';
+        }
+      });
+
+    });
+  }
+
 };
 
-checkboxContainer.addEventListener('change', (evt) => {
-  filterBigCards(evt);
+checkboxContainer.addEventListener('change', () => {
+  filterBigCards();
 });
