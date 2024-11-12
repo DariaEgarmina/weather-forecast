@@ -1,5 +1,6 @@
 import { changeCardType } from './change-card-type.js';
 import { sortCardsWhenDrop } from './sort.js';
+import { addObject } from './big-cards-data.js';
 
 const weatherContentContainer = document.querySelector('.weather-content__result');
 const smallCards = document.querySelectorAll('.small-card');
@@ -75,6 +76,8 @@ weatherContentContainer.addEventListener('dragend', (evt) => {
   evt.target.classList.remove('selected');
   changeCardType(evt);
   sortCardsWhenDrop(evt);
+
+  addObject(evt);
 });
 
 weatherContentContainer.addEventListener('dragover', (evt) => {
