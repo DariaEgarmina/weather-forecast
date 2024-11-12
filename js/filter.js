@@ -1,29 +1,20 @@
-const bigCardsContainer = document.querySelector('.weather-content__big-cards');
+import { bigCities, renderBigCards } from './render-big-cards.js';
+
+const weatherCheckboxElements = document.querySelectorAll('input[name="weather-conditions"]');
 const checkboxContainer = document.querySelector('.sort-form__group--checkbox');
 
-const filterBigCards = () => {
-  const bigCards = Array.from(bigCardsContainer.querySelectorAll('.big-card'));
-  bigCards.forEach((item) => item.style.display = 'flex');
+const filterBigCardsData = (city) => {
+  const checkedWeatherConditions = Array.from(weatherCheckboxElements)
+    .filter((condition) => condition.checked);
 
-  const activeCheckboxes = Array.from(document.querySelectorAll('input[name = "weather-conditions"]:checked'));
-
-  if (activeCheckboxes.length > 0) {
-    activeCheckboxes.forEach((element) => {
-      const value = element.value;
-
-      bigCards.forEach((item) => {
-        if (item.querySelector(`.icon--${value}`)) {
-          item.style.display = 'flex';
-        } else if (!item.querySelector(`.icon--${value}`)) {
-          item.style.display = 'none';
-        }
-      });
-
-    });
-  }
-
+  return checkedWeatherConditions.every((condition) => {
+    const value = condition.value;
+    return city.weather[value] === true;
+  });
 };
 
 checkboxContainer.addEventListener('change', () => {
-  filterBigCards();
+  const filteredCards = bigCities.filter((city) => filterBigCardsData(city));
+
+  renderBigCards(filteredCards);
 });

@@ -50,4 +50,4 @@ const renderSmallCards = (citiesArray) => {
 
 renderSmallCards(cities.cities);
 
-export { smallCardsContainer, smallCardTemplate };
+export { smallCardsContainer, smallCardTemplate, createWeatherConditions };

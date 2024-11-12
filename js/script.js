@@ -5,4 +5,5 @@ import './search.js';
 import './drag-n-drop.js';
 import './change-card-type.js';
 import './create-temperature.js';
+import './render-big-cards.js';
 import './filter.js';

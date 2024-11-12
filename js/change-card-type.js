@@ -46,4 +46,4 @@ const changeCardType = (evt) => {
   }
 };
 
-export { changeCardType };
+export { changeCardType, bigCardTemplate };
