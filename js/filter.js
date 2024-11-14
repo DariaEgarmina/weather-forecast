@@ -5,12 +5,10 @@ const checkboxContainer = document.querySelector('.sort-form__group--checkbox');
 
 const filterBigCardsData = (city) => {
   const checkedWeatherConditions = Array.from(weatherCheckboxElements)
-    .filter((condition) => condition.checked);
+    .filter((checkbox) => checkbox.checked)
+    .map((checkbox) => checkbox.value);
 
-  return checkedWeatherConditions.every((condition) => {
-    const value = condition.value;
-    return city.weather[value] === true;
-  });
+  return checkedWeatherConditions.every((value) => city.weather[value]);
 };
 
 checkboxContainer.addEventListener('change', () => {
