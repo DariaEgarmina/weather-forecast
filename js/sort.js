@@ -26,4 +26,4 @@ reverseSortButton.addEventListener('click', () => {
   renderSmallCards();
 });
 
-export { getSortType, SortTypeMethods };
+export { getSortType };

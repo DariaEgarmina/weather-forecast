@@ -8,7 +8,7 @@ const setSearch = (text) => {
   searchValue = text.toLowerCase();
 };
 
-const filterCitiesBySearch = (cities) => cities.filter((item) => item.city.toLowerCase().includes(searchValue));
+const filterCitiesBySearch = (cities) => cities.filter((item) => item.city.toLowerCase().startsWith(searchValue));
 
 searchInputElement.addEventListener('input', (evt) => {
   evt.preventDefault();
