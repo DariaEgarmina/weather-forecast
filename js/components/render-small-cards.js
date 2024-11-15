@@ -19,6 +19,8 @@ const createSmallCardElement = (city) => {
 
   smallCardElement.id = city.city.replaceAll(' ', '-');
 
+  smallCardElement.draggable = true;
+
   return smallCardElement;
 };
 

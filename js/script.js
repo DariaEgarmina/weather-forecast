@@ -13,7 +13,7 @@ import './state/favorite-cities.js';
 import './create-weather-conditions.js';
 import './create-temperature.js';
 
-// import './drag-n-drop.js';
+import './drag-n-drop.js';
 // import './change-card-type.js';
 
 
