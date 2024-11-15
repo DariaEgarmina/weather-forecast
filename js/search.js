@@ -1,19 +1,19 @@
+import { renderSmallCards } from './components/render-small-cards.js';
+
 const searchInputElement = document.querySelector('#search');
 
-const searchCity = (input) => {
-  const cityNames = document.querySelectorAll('.small-card__city');
-  const filter = input.value.toLowerCase();
+let searchValue = '';
 
-  for (let i = 0; i < cityNames.length; i++) {
-    if (cityNames[i].innerText.toLowerCase().startsWith(filter)) {
-      cityNames[i].parentNode.style.display = 'flex';
-    } else {
-      cityNames[i].parentNode.style.display = 'none';
-    }
-  }
+const setSearch = (text) => {
+  searchValue = text.toLowerCase();
 };
+
+const filterCitiesBySearch = (cities) => cities.filter((item) => item.city.toLowerCase().includes(searchValue));
 
 searchInputElement.addEventListener('input', (evt) => {
   evt.preventDefault();
-  searchCity(evt.target);
+  setSearch(evt.target.value);
+  renderSmallCards();
 });
+
+export { filterCitiesBySearch };

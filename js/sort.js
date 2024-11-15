@@ -1,52 +1,29 @@
-import { smallCardsContainer } from './render-small-cards.js';
-import { makeCardsDraggable } from './drag-n-drop.js';
+import { renderSmallCards } from './components/render-small-cards.js';
+
+const SortTypeMethods = {
+  ASC: (a, b) => a.city.localeCompare(b.city),
+  DESC: (a, b) => -a.city.localeCompare(b.city),
+};
 
 const alphabetSortButton = document.querySelector('#alphabet-sort');
 const reverseSortButton = document.querySelector('#alphabet-sort-reverse');
 
-const sortCards = (type) => {
-  const smallCards = Array.from(smallCardsContainer.querySelectorAll('.small-card'));
+let sortType = SortTypeMethods.ASC;
 
-  let smallCardsSorted;
+const getSortType = () => sortType;
 
-  if (type === 'alphabet') {
-    smallCardsSorted = smallCards.sort((a, b) => a.innerText > b.innerText ? 1 : -1);
-  } else if (type === 'reverse') {
-    smallCardsSorted = smallCards.sort((a, b) => a.innerText > b.innerText ? -1 : 1);
-  }
-
-  smallCardsContainer.innerHTML = smallCardsSorted.map((item) => `<div class="small-card">${item.innerHTML}</div>`).join('');
-  const newSmallCards = smallCardsContainer.querySelectorAll('.small-card');
-  makeCardsDraggable(newSmallCards);
+const setSortType = (type) => {
+  sortType = type;
 };
 
-const sortCardsWhenDrop = (evt) => {
-  const smallCardsArray = Array.from(evt.target.parentElement.querySelectorAll('.small-card'));
-  const isSmallCard = evt.target.parentElement.classList.contains('weather-content__small-cards');
-
-  if (alphabetSortButton.hasAttribute('checked') && isSmallCard) {
-    sortCards('alphabet', smallCardsArray);
-  }
-
-  if (reverseSortButton.hasAttribute('checked') && isSmallCard) {
-    sortCards('reverse', smallCardsArray);
-  }
-};
-
-alphabetSortButton.addEventListener('click', (evt) => {
-  evt.preventDefault();
-  sortCards('alphabet');
-
-  alphabetSortButton.setAttribute('checked', '');
-  reverseSortButton.removeAttribute('checked');
+alphabetSortButton.addEventListener('click', () => {
+  setSortType(SortTypeMethods.ASC);
+  renderSmallCards();
 });
 
-reverseSortButton.addEventListener('click', (evt) => {
-  evt.preventDefault();
-  sortCards('reverse');
-
-  alphabetSortButton.removeAttribute('checked');
-  reverseSortButton.setAttribute('checked', '');
+reverseSortButton.addEventListener('click', () => {
+  setSortType(SortTypeMethods.DESC);
+  renderSmallCards();
 });
 
-export { sortCardsWhenDrop };
+export { getSortType, SortTypeMethods };
