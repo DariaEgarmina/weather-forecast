@@ -13,4 +13,12 @@ const createWeatherConditions = (weatherObject) => {
   return fragment;
 };
 
-export { createWeatherConditions };
+const setWeatherConditions = (weatherObject, element) => {
+  for (const key in weatherObject) {
+    if(element.querySelector(`.icon--${key}`)) {
+      weatherObject[key] = true;
+    }
+  }
+};
+
+export { createWeatherConditions, setWeatherConditions };

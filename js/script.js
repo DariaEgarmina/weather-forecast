@@ -14,6 +14,8 @@ import './create-weather-conditions.js';
 import './create-temperature.js';
 
 import './drag-n-drop.js';
+
+import './create-card.js';
 // import './change-card-type.js';
 
 

@@ -1,6 +1,8 @@
+import { createCard } from './create-card.js';
+import { addCardToFavorites } from './state/favorite-cities.js';
+import { addCity, removeCity } from './state/cities.js';
+
 const weatherContentContainer = document.querySelector('.weather-content__result');
-// const smallCards = document.querySelectorAll('.small-card');
-// const bigCards = document.querySelectorAll('.big-card');
 
 const getNextElement = (cursorPosition, currentElement) => {
   const currentElementCoord = currentElement.getBoundingClientRect();
@@ -16,20 +18,19 @@ const getNextElement = (cursorPosition, currentElement) => {
 const moveElement = (evt) => {
   const activeElement = weatherContentContainer.querySelector('.selected');
 
-  const currentElement = evt.target;
+  let currentElement;
 
-  // if (evt.target.classList.contains('big-card__header') ||
-  //   evt.target.classList.contains('big-card__content')) {
-  //   currentElement = evt.target.closest('.big-card');
-  // } else {
-  //   currentElement = evt.target;
-  // }
+  if (evt.target.classList.contains('big-card__header') ||
+    evt.target.classList.contains('big-card__content')) {
+    currentElement = evt.target.closest('.big-card');
+  } else {
+    currentElement = evt.target;
+  }
 
   const isMovable = activeElement !== currentElement &&
     currentElement.classList.contains('small-card') ||
+    currentElement.classList.contains('big-card') ||
     currentElement.classList.contains('weather-content__big-cards');
-
-  // || currentElement.classList.contains('big-card');
 
   if (!isMovable) {
     return;
@@ -50,10 +51,6 @@ const moveElement = (evt) => {
     return;
   }
 
-  // console.log(isMovable);
-  // console.log(currentElement);
-  // console.log(nextElement);
-
   if (nextElement.classList.contains('weather-content__big-cards')) {
     nextElement.appendChild(activeElement);
   } else if (nextElement === null) {
@@ -69,6 +66,17 @@ weatherContentContainer.addEventListener('dragstart', (evt) => {
 
 weatherContentContainer.addEventListener('dragend', (evt) => {
   evt.target.classList.remove('selected');
+
+  const container = evt.target.parentElement;
+
+  if (container.classList.contains('weather-content__big-cards')) {
+    const card = createCard(evt.target, '.small-card__city');
+    addCardToFavorites(card);
+    removeCity(card);
+  } else if (container.classList.contains('weather-content__small-cards')) {
+    const card = createCard(evt.target, '.big-card__city');
+    addCity(card);
+  }
 });
 
 weatherContentContainer.addEventListener('dragover', (evt) => {

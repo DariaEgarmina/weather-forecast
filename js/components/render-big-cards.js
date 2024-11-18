@@ -1,4 +1,4 @@
-import { getFavoritesCities } from '../state/favorite-cities.js';
+import { favoritesCities } from '../state/favorite-cities.js';
 import { createWeatherConditions } from '../create-weather-conditions.js';
 import { createTemperature } from '../create-temperature.js';
 
@@ -21,13 +21,15 @@ const createBigCardElement = (city) => {
 
   bigCardElement.id = city.city.replaceAll(' ', '-');
 
+  bigCardElement.draggable = true;
+
   return bigCardElement;
 };
 
-const renderBigCards = () => {
+const renderBigCards = (cities) => {
   const fragment = document.createDocumentFragment();
 
-  getFavoritesCities().forEach((city) => {
+  cities.forEach((city) => {
     const bigCardElement = createBigCardElement(city);
     fragment.append(bigCardElement);
   });
@@ -36,6 +38,6 @@ const renderBigCards = () => {
   bigCardsContainer.append(fragment);
 };
 
-renderBigCards();
+renderBigCards(favoritesCities);
 
 export { renderBigCards };

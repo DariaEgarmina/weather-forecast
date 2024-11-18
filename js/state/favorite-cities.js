@@ -7,7 +7,7 @@ const favoritesCities = [];
 const getFavoritesCities = () => favoritesCities.filter(filterCityByConditions);
 
 const addCardToFavorites = (card) => {
-  const city = getAllCities().find((item) => item === card);
+  const city = getAllCities().find((item) => item.city === card.city);
   favoritesCities.push(city);
   renderBigCards(getFavoritesCities());
 };
@@ -22,4 +22,4 @@ const changeCardPosition = () => {
 
 };
 
-export { getFavoritesCities, addCardToFavorites, removeCardFromFavorites, changeCardPosition };
+export { favoritesCities, getFavoritesCities, addCardToFavorites, removeCardFromFavorites, changeCardPosition };
