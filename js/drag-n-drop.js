@@ -70,11 +70,11 @@ weatherContentContainer.addEventListener('dragend', (evt) => {
   const container = evt.target.parentElement;
 
   if (container.classList.contains('weather-content__big-cards')) {
-    const card = createCard(evt.target, '.small-card__city');
+    const card = createCard(evt.target, 'small-card');
     addCardToFavorites(card);
     removeCity(card);
   } else if (container.classList.contains('weather-content__small-cards')) {
-    const card = createCard(evt.target, '.big-card__city');
+    const card = createCard(evt.target, 'big-card');
     addCity(card);
   }
 });

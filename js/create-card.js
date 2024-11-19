@@ -1,5 +1,5 @@
-//import { createTemperatureSmallCard } from './create-temperature.js';
-import { setWeatherConditions } from './create-weather-conditions.js';
+import { setTemperatureValue } from './temperature.js';
+import { setWeatherConditions, setWindValues } from './weather-conditions.js';
 
 const createCard = (cityElement, selector) => {
   const card = {
@@ -24,8 +24,13 @@ const createCard = (cityElement, selector) => {
     }
   };
 
-  card.city = cityElement.querySelector(selector).textContent;
+  card.city = cityElement.querySelector(`.${selector}__city`).textContent;
+  card.coordinates.latitude = cityElement.querySelector('.latitude').textContent;
+  card.coordinates.longitude = cityElement.querySelector('.longitude').textContent;
   setWeatherConditions(card.weather, cityElement);
+  const temperatureValue = setTemperatureValue(cityElement, `.${selector}__temperature`);
+  card.temperature = temperatureValue;
+  setWindValues(card.wind, cityElement);
 
   return card;
 };

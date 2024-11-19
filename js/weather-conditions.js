@@ -1,4 +1,4 @@
-const createWeatherConditions = (weatherObject) => {
+const createWeatherConditionElements = (weatherObject) => {
   const fragment = document.createDocumentFragment();
 
   for (const key in weatherObject) {
@@ -21,4 +21,13 @@ const setWeatherConditions = (weatherObject, element) => {
   }
 };
 
-export { createWeatherConditions, setWeatherConditions };
+const setWindValues = (windObject, element) => {
+  const windInfo = element.querySelector('.big-card__wind-info').textContent.replace('Ветер ', '').replace(' м/с', '').replace(',', '');
+  const windDirection = windInfo.split(' ')[0];
+  const windSpeed = windInfo.split(' ')[1];
+
+  windObject['direction'] = windDirection;
+  windObject['speed'] = windSpeed;
+};
+
+export { createWeatherConditionElements, setWeatherConditions, setWindValues };

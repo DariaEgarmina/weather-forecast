@@ -10,12 +10,11 @@ import './filter.js';
 import './state/cities.js';
 import './state/favorite-cities.js';
 
-import './create-weather-conditions.js';
-import './create-temperature.js';
+import './weather-conditions.js';
+import './temperature.js';
 
 import './drag-n-drop.js';
 
 import './create-card.js';
-// import './change-card-type.js';
 
 

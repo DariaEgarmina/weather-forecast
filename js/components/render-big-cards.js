@@ -1,6 +1,6 @@
 import { favoritesCities } from '../state/favorite-cities.js';
-import { createWeatherConditions } from '../create-weather-conditions.js';
-import { createTemperature } from '../create-temperature.js';
+import { createWeatherConditionElements } from '../weather-conditions.js';
+import { createTemperature } from '../temperature.js';
 
 const bigCardsContainer = document.querySelector('.weather-content__big-cards');
 const bigCardTemplate = document.querySelector('#big-card').content.querySelector('.big-card');
@@ -10,7 +10,7 @@ const createBigCardElement = (city) => {
 
   bigCardElement.querySelector('.big-card__city').textContent = city.city;
 
-  const weatherConditions = createWeatherConditions(city.weather);
+  const weatherConditions = createWeatherConditionElements(city.weather);
   bigCardElement.querySelector('.big-card__weather-conditions').innerHTML = '';
   bigCardElement.querySelector('.big-card__weather-conditions').append(weatherConditions);
 
