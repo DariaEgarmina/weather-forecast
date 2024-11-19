@@ -1,5 +1,5 @@
 import { createCard } from './create-card.js';
-import { addCardToFavorites } from './state/favorite-cities.js';
+import { addCardToFavorites, removeCardFromFavorites } from './state/favorite-cities.js';
 import { addCity, removeCity } from './state/cities.js';
 
 const weatherContentContainer = document.querySelector('.weather-content__result');
@@ -51,10 +51,10 @@ const moveElement = (evt) => {
     return;
   }
 
-  if (nextElement.classList.contains('weather-content__big-cards')) {
-    nextElement.appendChild(activeElement);
-  } else if (nextElement === null) {
+  if (nextElement === null) {
     currentElement.after(activeElement);
+  } else if (nextElement.classList.contains('weather-content__big-cards')) {
+    nextElement.appendChild(activeElement);
   } else {
     nextElement.before(activeElement);
   }
@@ -69,12 +69,15 @@ weatherContentContainer.addEventListener('dragend', (evt) => {
 
   const container = evt.target.parentElement;
 
-  if (container.classList.contains('weather-content__big-cards')) {
+  if (evt.target.classList.contains('small-card') &&
+    container.classList.contains('weather-content__big-cards')) {
     const card = createCard(evt.target, 'small-card');
     addCardToFavorites(card);
     removeCity(card);
-  } else if (container.classList.contains('weather-content__small-cards')) {
+  } else if (evt.target.classList.contains('big-card') &&
+    container.classList.contains('weather-content__small-cards')) {
     const card = createCard(evt.target, 'big-card');
+    removeCardFromFavorites(card);
     addCity(card);
   }
 });

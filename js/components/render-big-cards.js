@@ -19,6 +19,9 @@ const createBigCardElement = (city) => {
   const temperature = createTemperature(city.temperature);
   bigCardElement.querySelector('.big-card__temperature').textContent = temperature;
 
+  bigCardElement.querySelector('.latitude').textContent = city.coordinates.latitude;
+  bigCardElement.querySelector('.longitude').textContent = city.coordinates.longitude;
+
   bigCardElement.id = city.city.replaceAll(' ', '-');
 
   bigCardElement.draggable = true;

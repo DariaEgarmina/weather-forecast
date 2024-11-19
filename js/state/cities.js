@@ -1,6 +1,7 @@
 import { CITIES } from '../mocks/cities.js';
 import { filterCitiesBySearch } from '../search.js';
 import { getSortType } from '../sort.js';
+import { renderSmallCards } from '../components/render-small-cards.js';
 
 const cities = CITIES;
 
@@ -15,6 +16,7 @@ const removeCity = (card) => {
 
 const addCity = (card) => {
   cities.push(card);
+  renderSmallCards();
 };
 
 export { getAllCities, getCitiesForSmallCardList, addCity, removeCity };
