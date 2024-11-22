@@ -1,16 +1,17 @@
-import { createCard } from './create-card.js';
-import { addCardToFavorites, removeCardFromFavorites } from './state/favorite-cities.js';
-import { addCity, removeCity } from './state/cities.js';
+import { getFavoritesCities, addCardToFavorites, removeCardFromFavorites } from './state/favorite-cities.js';
+import { getAllCities, addCity, removeCity } from './state/cities.js';
 
 const weatherContentContainer = document.querySelector('.weather-content__result');
 
 const getNextElement = (cursorPosition, currentElement) => {
-  const currentElementCoord = currentElement.getBoundingClientRect();
+  const element = currentElement.closest('.card') || currentElement.closest('.card-list');
+
+  const currentElementCoord = element.getBoundingClientRect();
   const currentElementCenter = currentElementCoord.y + currentElementCoord.height / 2;
 
   const nextElement = (cursorPosition < currentElementCenter) ?
-    currentElement :
-    currentElement.nextElementSibling;
+    element :
+    element.nextElementSibling;
 
   return nextElement;
 };
@@ -18,30 +19,19 @@ const getNextElement = (cursorPosition, currentElement) => {
 const moveElement = (evt) => {
   const activeElement = weatherContentContainer.querySelector('.selected');
 
-  let currentElement;
+  const underCardElement = evt.target.closest('.card');
+  const underListElement = evt.target.closest('.card-list');
 
-  if (evt.target.classList.contains('big-card__header') ||
-    evt.target.classList.contains('big-card__content')) {
-    currentElement = evt.target.closest('.big-card');
-  } else {
-    currentElement = evt.target;
-  }
-
-  const isMovable = activeElement !== currentElement &&
-    currentElement.classList.contains('small-card') ||
-    currentElement.classList.contains('big-card') ||
-    currentElement.classList.contains('weather-content__big-cards');
-
-  if (!isMovable) {
+  if (activeElement === underCardElement && !underListElement) {
     return;
   }
 
   if (activeElement.classList.contains('small-card') &&
-    currentElement.closest('.weather-content__small-cards')) {
+    underListElement.classList.contains('weather-content__small-cards')) {
     return;
   }
 
-  const nextElement = getNextElement(evt.clientY, currentElement);
+  const nextElement = getNextElement(evt.clientY, evt.target);
 
   if (
     nextElement &&
@@ -52,7 +42,7 @@ const moveElement = (evt) => {
   }
 
   if (nextElement === null) {
-    currentElement.after(activeElement);
+    underCardElement.after(activeElement);
   } else if (nextElement.classList.contains('weather-content__big-cards')) {
     nextElement.appendChild(activeElement);
   } else {
@@ -71,12 +61,12 @@ weatherContentContainer.addEventListener('dragend', (evt) => {
 
   if (evt.target.classList.contains('small-card') &&
     container.classList.contains('weather-content__big-cards')) {
-    const card = createCard(evt.target, 'small-card');
+    const card = getAllCities().find((item) => item.city === evt.target.id);
     addCardToFavorites(card);
     removeCity(card);
   } else if (evt.target.classList.contains('big-card') &&
     container.classList.contains('weather-content__small-cards')) {
-    const card = createCard(evt.target, 'big-card');
+    const card = getFavoritesCities().find((item) => item.city === evt.target.id);
     removeCardFromFavorites(card);
     addCity(card);
   }

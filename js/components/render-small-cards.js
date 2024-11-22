@@ -7,6 +7,8 @@ const smallCardTemplate = document.querySelector('#small-card').content.querySel
 const createSmallCardElement = (city) => {
   const smallCardElement = smallCardTemplate.cloneNode(true);
 
+  smallCardElement.classList.add('card');
+
   smallCardElement.querySelector('.small-card__city').textContent = city.city;
   smallCardElement.querySelector('.small-card__temperature').textContent = city.temperature;
 

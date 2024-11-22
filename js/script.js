@@ -15,6 +15,4 @@ import './temperature.js';
 
 import './drag-n-drop.js';
 
-import './create-card.js';
-
 

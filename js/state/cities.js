@@ -9,14 +9,14 @@ const getAllCities = () => cities;
 
 const getCitiesForSmallCardList = () => filterCitiesBySearch(cities).sort(getSortType());
 
-const removeCity = (card) => {
-  const cardIndex = cities.findIndex((city) => city.city === card.city);
-  cities.splice(cardIndex, 1);
-};
-
 const addCity = (card) => {
   cities.push(card);
   renderSmallCards();
+};
+
+const removeCity = (card) => {
+  const cardIndex = cities.findIndex((city) => city === card);
+  cities.splice(cardIndex, 1);
 };
 
 export { getAllCities, getCitiesForSmallCardList, addCity, removeCity };

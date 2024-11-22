@@ -8,6 +8,8 @@ const bigCardTemplate = document.querySelector('#big-card').content.querySelecto
 const createBigCardElement = (city) => {
   const bigCardElement = bigCardTemplate.cloneNode(true);
 
+  bigCardElement.classList.add('card');
+
   bigCardElement.querySelector('.big-card__city').textContent = city.city;
 
   const weatherConditions = createWeatherConditionElements(city.weather);
