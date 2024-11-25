@@ -43,7 +43,7 @@
 }
 
 .small-card--shadow {
-  pointer-events: none;
+  pointer-events: auto;
   background-color: var(--color-shadow-main);
 }
 

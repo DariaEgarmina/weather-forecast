@@ -109,7 +109,7 @@
 }
 
 .big-card--shadow {
-  pointer-events: none;
+  pointer-events: auto;
   opacity: 0.3;
   background-color: var(--color-blue-light);
 }

@@ -52,10 +52,18 @@ const moveElement = (evt) => {
 
 weatherContentContainer.addEventListener('dragstart', (evt) => {
   evt.target.classList.add('selected');
+
+  if (evt.target.classList.contains('small-card')) {
+    evt.target.classList.add('small-card--shadow');
+  } else if (evt.target.classList.contains('big-card')) {
+    evt.target.classList.add('big-card--shadow');
+  }
 });
 
 weatherContentContainer.addEventListener('dragend', (evt) => {
   evt.target.classList.remove('selected');
+  evt.target.classList.remove('small-card--shadow');
+  evt.target.classList.remove('big-card--shadow');
 
   const container = evt.target.parentElement;
 
