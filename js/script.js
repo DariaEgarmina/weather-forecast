@@ -15,4 +15,6 @@ import './temperature.js';
 
 import './drag-n-drop.js';
 
+import './utils.js';
+
 

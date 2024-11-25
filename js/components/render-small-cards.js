@@ -1,5 +1,6 @@
 import { getCitiesForSmallCardList } from '../state/cities.js';
 import { createWeatherConditionElements } from '../weather-conditions.js';
+import { getCityId } from '../utils.js';
 
 const smallCardsContainer = document.querySelector('.weather-content__small-cards');
 const smallCardTemplate = document.querySelector('#small-card').content.querySelector('.small-card');
@@ -22,7 +23,7 @@ const createSmallCardElement = (city) => {
   smallCardElement.querySelector('.latitude').textContent = city.coordinates.latitude;
   smallCardElement.querySelector('.longitude').textContent = city.coordinates.longitude;
 
-  smallCardElement.id = city.city.replaceAll(' ', '-');
+  smallCardElement.id = getCityId(city.city);
 
   smallCardElement.draggable = true;
 

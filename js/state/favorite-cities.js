@@ -1,5 +1,6 @@
 import { renderBigCards } from '../components/render-big-cards.js';
 import { filterCityByConditions } from '../filter.js';
+import { getCityId } from '../utils.js';
 
 const favoritesCities = [];
 
@@ -15,9 +16,6 @@ const removeCardFromFavorites = (card) => {
   favoritesCities.splice(cardIndex, 1);
 };
 
-// Карточку переместили внутри списка избранного
-// const changeCardPosition = () => {
+const getFavoriteCityById = (id) => getFavoritesCities().find((item) => getCityId(item.city) === id);
 
-// };
-
-export { favoritesCities, getFavoritesCities, addCardToFavorites, removeCardFromFavorites };
+export { favoritesCities, getFavoritesCities, addCardToFavorites, removeCardFromFavorites, getFavoriteCityById };

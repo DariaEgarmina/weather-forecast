@@ -1,6 +1,7 @@
 import { favoritesCities } from '../state/favorite-cities.js';
 import { createWeatherConditionElements } from '../weather-conditions.js';
 import { createTemperature } from '../temperature.js';
+import { getCityId } from '../utils.js';
 
 const bigCardsContainer = document.querySelector('.weather-content__big-cards');
 const bigCardTemplate = document.querySelector('#big-card').content.querySelector('.big-card');
@@ -24,7 +25,7 @@ const createBigCardElement = (city) => {
   bigCardElement.querySelector('.latitude').textContent = city.coordinates.latitude;
   bigCardElement.querySelector('.longitude').textContent = city.coordinates.longitude;
 
-  bigCardElement.id = city.city.replaceAll(' ', '-');
+  bigCardElement.id = getCityId(city.city);
 
   bigCardElement.draggable = true;
 

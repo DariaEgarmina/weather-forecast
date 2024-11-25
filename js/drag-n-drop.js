@@ -1,5 +1,5 @@
-import { getFavoritesCities, addCardToFavorites, removeCardFromFavorites } from './state/favorite-cities.js';
-import { getAllCities, addCity, removeCity } from './state/cities.js';
+import { addCardToFavorites, removeCardFromFavorites, getFavoriteCityById } from './state/favorite-cities.js';
+import { addCity, removeCity, getCityById } from './state/cities.js';
 
 const weatherContentContainer = document.querySelector('.weather-content__result');
 
@@ -22,7 +22,7 @@ const moveElement = (evt) => {
   const underCardElement = evt.target.closest('.card');
   const underListElement = evt.target.closest('.card-list');
 
-  if (activeElement === underCardElement && !underListElement) {
+  if (activeElement === underCardElement || !underListElement) {
     return;
   }
 
@@ -61,12 +61,12 @@ weatherContentContainer.addEventListener('dragend', (evt) => {
 
   if (evt.target.classList.contains('small-card') &&
     container.classList.contains('weather-content__big-cards')) {
-    const card = getAllCities().find((item) => item.city === evt.target.id);
+    const card = getCityById(evt.target.id);
     addCardToFavorites(card);
     removeCity(card);
   } else if (evt.target.classList.contains('big-card') &&
     container.classList.contains('weather-content__small-cards')) {
-    const card = getFavoritesCities().find((item) => item.city === evt.target.id);
+    const card = getFavoriteCityById(evt.target.id);
     removeCardFromFavorites(card);
     addCity(card);
   }

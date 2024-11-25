@@ -2,6 +2,7 @@ import { CITIES } from '../mocks/cities.js';
 import { filterCitiesBySearch } from '../search.js';
 import { getSortType } from '../sort.js';
 import { renderSmallCards } from '../components/render-small-cards.js';
+import { getCityId } from '../utils.js';
 
 const cities = CITIES;
 
@@ -19,4 +20,6 @@ const removeCity = (card) => {
   cities.splice(cardIndex, 1);
 };
 
-export { getAllCities, getCitiesForSmallCardList, addCity, removeCity };
+const getCityById = (id) => getAllCities().find((item) => getCityId(item.city) === id);
+
+export { getCitiesForSmallCardList, addCity, removeCity, getCityById };
