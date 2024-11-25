@@ -17,4 +17,6 @@ import './drag-n-drop.js';
 
 import './utils.js';
 
+import './map.js';
+
 

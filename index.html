@@ -8,6 +8,9 @@
   <meta name="description" content="Прогноз погоды" />
   <link rel="preload" href="./fonts/OpenSansCondensed-Light.woff2" as="font" crossorigin="anonymous" />
   <link rel="stylesheet" href="./css/style.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+    crossorigin="" />
 </head>
 
 <body>
@@ -362,7 +365,7 @@
           </div>
         </section>
       </div>
-      <div class="weather-app__map weather-map">
+      <div id="map" class="weather-app__map weather-map">
         <span class="pin pin--temporarily"></span>
       </div>
     </section>
@@ -417,6 +420,9 @@
     </div>
   </template>
 
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+    crossorigin=""></script>
   <script src="js/script.js" type="module"></script>
 </body>
 

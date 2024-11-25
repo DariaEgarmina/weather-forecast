@@ -1,5 +1,6 @@
-import { addCardToFavorites, removeCardFromFavorites, getFavoriteCityById } from './state/favorite-cities.js';
+import { favoritesCities, addCardToFavorites, removeCardFromFavorites, getFavoriteCityById } from './state/favorite-cities.js';
 import { addCity, removeCity, getCityById } from './state/cities.js';
+import { renderMarkers, removeMarkers } from './map.js';
 
 const weatherContentContainer = document.querySelector('.weather-content__result');
 
@@ -72,11 +73,13 @@ weatherContentContainer.addEventListener('dragend', (evt) => {
     const card = getCityById(evt.target.id);
     addCardToFavorites(card);
     removeCity(card);
+    renderMarkers(favoritesCities);
   } else if (evt.target.classList.contains('big-card') &&
     container.classList.contains('weather-content__small-cards')) {
     const card = getFavoriteCityById(evt.target.id);
     removeCardFromFavorites(card);
     addCity(card);
+    removeMarkers(favoritesCities);
   }
 });
 
