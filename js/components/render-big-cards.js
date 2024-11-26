@@ -46,4 +46,4 @@ const renderBigCards = (cities) => {
 
 renderBigCards(favoritesCities);
 
-export { renderBigCards };
+export { renderBigCards, bigCardsContainer };

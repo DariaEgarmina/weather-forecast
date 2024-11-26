@@ -108,6 +108,10 @@
   filter: drop-shadow(0 8px 20px rgba(11, 23, 78, 0.5));
 }
 
+.big-card__active {
+  filter: drop-shadow(0 8px 20px rgba(11, 23, 78, 0.5));
+}
+
 .big-card--shadow {
   pointer-events: auto;
   opacity: 0.3;

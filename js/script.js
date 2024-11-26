@@ -19,4 +19,6 @@ import './utils.js';
 
 import './map.js';
 
+import './interaction.js';
+
 
