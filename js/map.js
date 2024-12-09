@@ -36,4 +36,18 @@ const removeMarkers = (favoritesCities) => {
   renderMarkers(favoritesCities);
 };
 
-export { renderMarkers, removeMarkers };
+const changeMapView = (city) => {
+  map.setView({
+    lat: parseFloat(city.coordinates.latitude.toFixed(3)),
+    lng: parseFloat(city.coordinates.longitude.toFixed(3)),
+  }, 6);
+};
+
+const setDefaultMapView = () => {
+  map.setView({
+    lat: DefaultLocationForMap.LAT,
+    lng: DefaultLocationForMap.LNG,
+  }, 8);
+};
+
+export { renderMarkers, removeMarkers, changeMapView, setDefaultMapView };

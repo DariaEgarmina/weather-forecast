@@ -1,6 +1,8 @@
 import { favoritesCities, addCardToFavorites, removeCardFromFavorites, getFavoriteCityById } from './state/favorite-cities.js';
 import { addCity, removeCity, getCityById } from './state/cities.js';
 import { renderMarkers, removeMarkers } from './map.js';
+import { bigCardsContainer } from './components/render-big-cards.js';
+import { setDefaultMapView } from './map.js';
 
 const weatherContentContainer = document.querySelector('.weather-content__result');
 
@@ -80,6 +82,10 @@ weatherContentContainer.addEventListener('dragend', (evt) => {
     removeCardFromFavorites(card);
     addCity(card);
     removeMarkers(favoritesCities);
+  }
+
+  if (bigCardsContainer.children.length === 0) {
+    setDefaultMapView();
   }
 });
 
