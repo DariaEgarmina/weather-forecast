@@ -3,6 +3,9 @@ const DefaultLocationForMap = {
   LNG: 31.448,
 };
 
+const OPACITY_INACTIVE = 0.5;
+const OPACITY_ACTIVE = 1.0;
+
 const map = L.map('map')
   .setView({
     lat: DefaultLocationForMap.LAT,
@@ -18,6 +21,14 @@ L.tileLayer(
 
 const markerGroup = L.layerGroup().addTo(map);
 
+const onMarkerMouseOver = (evt) => {
+  evt.target.setOpacity(OPACITY_ACTIVE);
+};
+
+const onMarkerMouseOut = (evt) => {
+  evt.target.setOpacity(OPACITY_INACTIVE);
+};
+
 const createMarker = (city) => {
   const marker = L.marker(
     {
@@ -26,14 +37,16 @@ const createMarker = (city) => {
     },
   );
 
-  marker.addTo(markerGroup);
+  marker.addTo(markerGroup)
+    .setOpacity(OPACITY_INACTIVE)
+    .on('mouseover', onMarkerMouseOver)
+    .on('mouseout', onMarkerMouseOut);
 };
 
 const renderMarkers = (favoritesCities) => favoritesCities.forEach((favoriteCity) => createMarker(favoriteCity));
 
-const removeMarkers = (favoritesCities) => {
+const removeMarkers = () => {
   markerGroup.clearLayers();
-  renderMarkers(favoritesCities);
 };
 
 const changeMapView = (city) => {

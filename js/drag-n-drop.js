@@ -75,13 +75,15 @@ weatherContentContainer.addEventListener('dragend', (evt) => {
     const card = getCityById(evt.target.id);
     addCardToFavorites(card);
     removeCity(card);
+    removeMarkers();
     renderMarkers(favoritesCities);
   } else if (evt.target.classList.contains('big-card') &&
     container.classList.contains('weather-content__small-cards')) {
     const card = getFavoriteCityById(evt.target.id);
     removeCardFromFavorites(card);
     addCity(card);
-    removeMarkers(favoritesCities);
+    removeMarkers();
+    renderMarkers(favoritesCities);
   }
 
   if (bigCardsContainer.children.length === 0) {
