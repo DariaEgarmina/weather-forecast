@@ -1,6 +1,6 @@
 import { bigCardsContainer } from './components/render-big-cards.js';
 import { getFavoriteCityById } from './state/favorite-cities.js';
-import { changeMapView } from './map.js';
+import { changeMapView, selectActiveMarker, deselectActiveMarker } from './map.js';
 
 const selectCityInList = (activeElement) => {
   Array.from(bigCardsContainer.querySelectorAll('.card'))
@@ -13,15 +13,14 @@ const selectCityInList = (activeElement) => {
   activeElement.classList.toggle('big-card__active');
 };
 
-// const selectMarker = () => {
-//   const activeCityId = bigCardsContainer.querySelector('.big-card__active').id;
-//   const city = getFavoriteCityById(activeCityId);
-//   - удалить старый маркер
-//   - создать новый красивый маркер?
-// };
+const findActiveCityId = () => {
+  if (bigCardsContainer.querySelector('.big-card__active')) {
+    const activeCityId = bigCardsContainer.querySelector('.big-card__active').id;
+    return activeCityId;
+  }
+};
 
-const centerCityInViewport = () => {
-  const activeCityId = bigCardsContainer.querySelector('.big-card__active').id;
+const centerCityInViewport = (activeCityId) => {
   const city = getFavoriteCityById(activeCityId);
   changeMapView(city);
 };
@@ -29,5 +28,12 @@ const centerCityInViewport = () => {
 bigCardsContainer.addEventListener('click', (evt) => {
   const activeElement = evt.target.closest('.card');
   selectCityInList(activeElement);
-  centerCityInViewport();
+
+  deselectActiveMarker();
+  const activeCityId = findActiveCityId();
+
+  if (activeCityId) {
+    centerCityInViewport(activeCityId);
+    selectActiveMarker(activeCityId);
+  }
 });

@@ -6,6 +6,8 @@ const DefaultLocationForMap = {
 const OPACITY_INACTIVE = 0.5;
 const OPACITY_ACTIVE = 1.0;
 
+const markers = [];
+
 const map = L.map('map')
   .setView({
     lat: DefaultLocationForMap.LAT,
@@ -35,18 +37,29 @@ const createMarker = (city) => {
       lat: city.coordinates.latitude,
       lng: city.coordinates.longitude
     },
+    {
+      title: city.city
+    },
   );
 
   marker.addTo(markerGroup)
     .setOpacity(OPACITY_INACTIVE)
     .on('mouseover', onMarkerMouseOver)
     .on('mouseout', onMarkerMouseOut);
+
+  return marker;
 };
 
-const renderMarkers = (favoritesCities) => favoritesCities.forEach((favoriteCity) => createMarker(favoriteCity));
+const renderMarkers = (favoritesCities) => favoritesCities.forEach((favoriteCity) => {
+  const marker = createMarker(favoriteCity);
+
+  markers.push(marker);
+});
 
 const removeMarkers = () => {
   markerGroup.clearLayers();
+
+  markers.length = 0;
 };
 
 const changeMapView = (city) => {
@@ -63,4 +76,17 @@ const setDefaultMapView = () => {
   }, 8);
 };
 
-export { renderMarkers, removeMarkers, changeMapView, setDefaultMapView };
+const selectActiveMarker = (activeCityId) => {
+  const activeMarker = markers.find((marker) => marker.options.title === activeCityId);
+  activeMarker.setOpacity(OPACITY_ACTIVE);
+};
+
+const deselectActiveMarker = () => {
+  markers.forEach((marker) => {
+    if (marker.options.opacity === OPACITY_ACTIVE) {
+      marker.setOpacity(OPACITY_INACTIVE);
+    }
+  });
+};
+
+export { renderMarkers, removeMarkers, changeMapView, setDefaultMapView, selectActiveMarker, deselectActiveMarker };
