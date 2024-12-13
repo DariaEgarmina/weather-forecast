@@ -25,6 +25,32 @@ const centerCityInViewport = (activeCityId) => {
   changeMapView(city);
 };
 
+const addHoverOnCityCard = (cityCard) => {
+  cityCard.classList.add('big-card__hover');
+};
+
+const removeHoverFromCityCard = (cityCard) => {
+  cityCard.classList.remove('big-card__hover');
+};
+
+const selectActiveCard = (markerTitle) => {
+  Array.from(bigCardsContainer.querySelectorAll('.card'))
+    .forEach((item) => {
+      if (item.id === markerTitle) {
+        addHoverOnCityCard(item);
+      }
+    });
+};
+
+const deselectActiveCard = (markerTitle) => {
+  Array.from(bigCardsContainer.querySelectorAll('.card'))
+    .forEach((item) => {
+      if (item.id === markerTitle) {
+        removeHoverFromCityCard(item);
+      }
+    });
+};
+
 bigCardsContainer.addEventListener('click', (evt) => {
   const activeElement = evt.target.closest('.card');
   selectCityInList(activeElement);
@@ -37,3 +63,19 @@ bigCardsContainer.addEventListener('click', (evt) => {
     selectActiveMarker(activeCityId);
   }
 });
+
+bigCardsContainer.addEventListener('mouseover', (evt) => {
+  const cityCard = evt.target.closest('.card');
+  if (cityCard) {
+    addHoverOnCityCard(cityCard);
+  }
+});
+
+bigCardsContainer.addEventListener('mouseout', (evt) => {
+  const cityCard = evt.target.closest('.card');
+  if (cityCard) {
+    removeHoverFromCityCard(cityCard);
+  }
+});
+
+export { selectActiveCard, deselectActiveCard };

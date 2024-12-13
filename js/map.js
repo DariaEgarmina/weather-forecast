@@ -1,3 +1,6 @@
+import { getCityId } from './utils.js';
+import { selectActiveCard, deselectActiveCard } from './interaction.js';
+
 const DefaultLocationForMap = {
   LAT: 59.538,
   LNG: 31.448,
@@ -25,10 +28,14 @@ const markerGroup = L.layerGroup().addTo(map);
 
 const onMarkerMouseOver = (evt) => {
   evt.target.setOpacity(OPACITY_ACTIVE);
+  const markerTitle = getCityId(evt.target.options.title);
+  selectActiveCard(markerTitle);
 };
 
 const onMarkerMouseOut = (evt) => {
   evt.target.setOpacity(OPACITY_INACTIVE);
+  const markerTitle = getCityId(evt.target.options.title);
+  deselectActiveCard(markerTitle);
 };
 
 const createMarker = (city) => {
@@ -77,7 +84,7 @@ const setDefaultMapView = () => {
 };
 
 const selectActiveMarker = (activeCityId) => {
-  const activeMarker = markers.find((marker) => marker.options.title === activeCityId);
+  const activeMarker = markers.find((marker) => getCityId(marker.options.title) === activeCityId);
   activeMarker.setOpacity(OPACITY_ACTIVE);
 };
 
