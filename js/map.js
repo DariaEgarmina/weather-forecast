@@ -96,4 +96,12 @@ const deselectActiveMarker = () => {
   });
 };
 
-export { renderMarkers, removeMarkers, changeMapView, setDefaultMapView, selectActiveMarker, deselectActiveMarker };
+const deselectActiveMarkerWhenHoverCity = (activeCityId) => {
+  markers.forEach((marker) => {
+    if (marker.options.title === activeCityId) {
+      marker.setOpacity(OPACITY_INACTIVE);
+    }
+  });
+};
+
+export { renderMarkers, removeMarkers, changeMapView, setDefaultMapView, selectActiveMarker, deselectActiveMarker, deselectActiveMarkerWhenHoverCity };

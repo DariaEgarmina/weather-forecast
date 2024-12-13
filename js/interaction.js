@@ -1,6 +1,8 @@
 import { bigCardsContainer } from './components/render-big-cards.js';
 import { getFavoriteCityById } from './state/favorite-cities.js';
-import { changeMapView, selectActiveMarker, deselectActiveMarker } from './map.js';
+import { changeMapView, selectActiveMarker, deselectActiveMarker, deselectActiveMarkerWhenHoverCity } from './map.js';
+
+// let cardWithActiveClass;
 
 const selectCityInList = (activeElement) => {
   Array.from(bigCardsContainer.querySelectorAll('.card'))
@@ -67,14 +69,20 @@ bigCardsContainer.addEventListener('click', (evt) => {
 bigCardsContainer.addEventListener('mouseover', (evt) => {
   const cityCard = evt.target.closest('.card');
   if (cityCard) {
+    const cityCardId = cityCard.id;
     addHoverOnCityCard(cityCard);
+    selectActiveMarker(cityCardId);
   }
 });
 
 bigCardsContainer.addEventListener('mouseout', (evt) => {
   const cityCard = evt.target.closest('.card');
   if (cityCard) {
+    const cityCardId = cityCard.id;
     removeHoverFromCityCard(cityCard);
+    if (!cityCard.classList.contains('big-card__active')) {
+      deselectActiveMarkerWhenHoverCity(cityCardId);
+    }
   }
 });
 
