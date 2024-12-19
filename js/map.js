@@ -1,5 +1,5 @@
 import { getCityId } from './utils.js';
-import { selectActiveCard, deselectActiveCard } from './interaction.js';
+import { selectActiveCard, deselectActiveCard, findActiveCityId } from './interaction.js';
 
 const DefaultLocationForMap = {
   LAT: 59.538,
@@ -10,6 +10,7 @@ const OPACITY_INACTIVE = 0.5;
 const OPACITY_ACTIVE = 1.0;
 
 const markers = [];
+const mapBounds = [];
 
 const map = L.map('map')
   .setView({
@@ -27,14 +28,17 @@ L.tileLayer(
 const markerGroup = L.layerGroup().addTo(map);
 
 const onMarkerMouseOver = (evt) => {
-  evt.target.setOpacity(OPACITY_ACTIVE);
   const markerTitle = getCityId(evt.target.options.title);
+  evt.target.setOpacity(OPACITY_ACTIVE);
   selectActiveCard(markerTitle);
 };
 
 const onMarkerMouseOut = (evt) => {
-  evt.target.setOpacity(OPACITY_INACTIVE);
   const markerTitle = getCityId(evt.target.options.title);
+  const activeCardId = findActiveCityId();
+  if (markerTitle !== activeCardId) {
+    evt.target.setOpacity(OPACITY_INACTIVE);
+  }
   deselectActiveCard(markerTitle);
 };
 
@@ -59,7 +63,6 @@ const createMarker = (city) => {
 
 const renderMarkers = (favoritesCities) => favoritesCities.forEach((favoriteCity) => {
   const marker = createMarker(favoriteCity);
-
   markers.push(marker);
 });
 
@@ -98,10 +101,33 @@ const deselectActiveMarker = () => {
 
 const deselectActiveMarkerWhenHoverCity = (activeCityId) => {
   markers.forEach((marker) => {
-    if (marker.options.title === activeCityId) {
+    if (getCityId(marker.options.title) === activeCityId) {
       marker.setOpacity(OPACITY_INACTIVE);
     }
   });
 };
 
-export { renderMarkers, removeMarkers, changeMapView, setDefaultMapView, selectActiveMarker, deselectActiveMarker, deselectActiveMarkerWhenHoverCity };
+const createMapBounds = () => {
+  mapBounds.length = 0;
+
+  markers.forEach((marker) => {
+    const markerCoordinates = [];
+    markerCoordinates.push(marker.getLatLng().lat);
+    markerCoordinates.push(marker.getLatLng().lng);
+    mapBounds.push(markerCoordinates);
+  });
+
+  return mapBounds;
+};
+
+const fitMapBoundsToAllMarkers = () => {
+  const bounds = createMapBounds();
+  map.fitBounds(
+    bounds,
+    {
+      maxZoom: 8
+    },
+  );
+};
+
+export { renderMarkers, removeMarkers, changeMapView, setDefaultMapView, selectActiveMarker, deselectActiveMarker, deselectActiveMarkerWhenHoverCity, fitMapBoundsToAllMarkers };

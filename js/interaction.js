@@ -2,8 +2,6 @@ import { bigCardsContainer } from './components/render-big-cards.js';
 import { getFavoriteCityById } from './state/favorite-cities.js';
 import { changeMapView, selectActiveMarker, deselectActiveMarker, deselectActiveMarkerWhenHoverCity } from './map.js';
 
-// let cardWithActiveClass;
-
 const selectCityInList = (activeElement) => {
   Array.from(bigCardsContainer.querySelectorAll('.card'))
     .forEach((item) => {
@@ -86,4 +84,4 @@ bigCardsContainer.addEventListener('mouseout', (evt) => {
   }
 });
 
-export { selectActiveCard, deselectActiveCard };
+export { selectActiveCard, deselectActiveCard, findActiveCityId };
