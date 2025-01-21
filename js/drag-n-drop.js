@@ -46,7 +46,8 @@ const moveElement = (evt) => {
 
   if (nextElement === null) {
     underCardElement.after(activeElement);
-  } else if (nextElement.classList.contains('weather-content__big-cards')) {
+  } else if (nextElement.classList.contains('weather-content__big-cards') ||
+    nextElement.classList.contains('weather-content__small-cards')) {
     nextElement.appendChild(activeElement);
   } else {
     nextElement.before(activeElement);
