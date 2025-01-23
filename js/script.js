@@ -21,4 +21,4 @@ import './map.js';
 
 import './interaction.js';
 
-
+import './getdata.js';
