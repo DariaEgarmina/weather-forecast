@@ -25,7 +25,7 @@ import { getData } from './api.js';
 
 getData()
   .then((data) => {
-    setCities(data);
+    setCities(data.cities);
     renderSmallCards();
     renderBigCards(favoritesCities);
   });
