@@ -42,6 +42,4 @@ const renderSmallCards = () => {
   smallCardsContainer.append(fragment);
 };
 
-renderSmallCards();
-
 export { renderSmallCards };

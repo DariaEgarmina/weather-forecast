@@ -1,4 +1,4 @@
-import { favoritesCities } from '../state/favorite-cities.js';
+//import { favoritesCities } from '../state/favorite-cities.js';
 import { createWeatherConditionElements } from '../weather-conditions.js';
 import { createTemperature } from '../temperature.js';
 import { getCityId } from '../utils.js';
@@ -44,6 +44,6 @@ const renderBigCards = (cities) => {
   bigCardsContainer.append(fragment);
 };
 
-renderBigCards(favoritesCities);
+// renderBigCards(favoritesCities);
 
 export { renderBigCards, bigCardsContainer };
